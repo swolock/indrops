@@ -1539,6 +1539,12 @@ class V3Demultiplexer():
         """
 
         r1, r2, r3, r4 = seqs
+
+        # If read2 (BC1) has been truncated, add N's so barcode 
+        # will work as designed. 
+        if len(r2) < 8:
+            r2 += 'N' * (8 - len(r2))
+
         if self.run_version_details=='v3-miseq':
             r2 = rev_comp(r2)
             r4 = rev_comp(r4)
